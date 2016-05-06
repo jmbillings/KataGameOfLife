@@ -18,6 +18,19 @@ namespace GameOfLifeKata
         /// <param name="initialGameState">string representing the initial state of the game</param>
         public Game(string initialGameState)
         {
+            GetGameSize(initialGameState);  
+        }
+
+        /// <summary>
+        /// Updates the game, calculating life and death
+        /// </summary>
+        public void UpdateGame()
+        {
+
+        }
+
+        private void GetGameSize(string initialGameState)
+        {
             try
             {
                 string[] headerRowValues = initialGameState.Substring(0, initialGameState.IndexOf('\n')).Split(' ');
@@ -36,14 +49,6 @@ namespace GameOfLifeKata
             {
                 throw new InvalidGameHeaderException();
             }
-        }
-
-        /// <summary>
-        /// Updates the game, calculating life and death
-        /// </summary>
-        public void UpdateGame()
-        {
-
         }
     }
 }
