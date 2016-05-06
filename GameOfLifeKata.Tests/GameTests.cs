@@ -20,6 +20,18 @@ namespace GameOfLifeKata.Tests
             Assert.AreEqual(game.m_Columns, expectedColumns);    
         }
 
-
+        [Test]
+        [TestCase("0 1\n")]
+        [TestCase("1 0\n")]
+        [TestCase("100 200 300\n")]
+        [TestCase("1\n")]
+        [TestCase("\n")]
+        [TestCase("a b")]
+        [TestCase("1 2")]
+        public void InvalidGameHeaderThrowsCorrectException(string gameHeader)
+        {
+            Game game;
+            Assert.Throws<InvalidGameHeaderException>(() => game = new Game(gameHeader));
+        }
     }
 }

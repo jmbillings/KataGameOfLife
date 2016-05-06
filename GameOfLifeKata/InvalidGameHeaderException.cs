@@ -2,7 +2,7 @@
 
 namespace GameOfLifeKata
 {
-    class InvalidGameHeaderException : Exception
+    public class InvalidGameHeaderException : Exception
     {
         public override string ToString()
         {
