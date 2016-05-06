@@ -21,10 +21,16 @@ namespace GameOfLifeKata
             try
             {
                 string[] headerRowValues = initialGameState.Substring(0, initialGameState.IndexOf('\n')).Split(' ');
+
+                if (headerRowValues.Length != 2)
+                    throw new InvalidGameHeaderException();
                 if (!int.TryParse(headerRowValues[0], out m_Rows))
                     throw new InvalidGameHeaderException();
                 if (!int.TryParse(headerRowValues[1], out m_Columns))
                     throw new InvalidGameHeaderException();
+                if (m_Columns == 0 || m_Rows == 0)
+                    throw new InvalidGameHeaderException();
+
             }
             catch
             {
