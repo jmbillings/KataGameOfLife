@@ -33,7 +33,20 @@ namespace GameOfLifeKata
 
         private void PopulateInitialState(string initialGameState)
         {
-
+            string[] rows = initialGameState.Split('\n');
+            for (int rowIndex = 1; rowIndex < rows.Length; rowIndex++)
+            {
+                char[] rowCharacters = rows[rowIndex].ToCharArray();
+                for (int colIndex = 0; colIndex < rowCharacters.Length; colIndex++)
+                {
+                    if (rowCharacters[colIndex] == '.')
+                        m_Grid[rowIndex - 1, colIndex] = false;
+                    else if (rowCharacters[colIndex] == '*')
+                        m_Grid[rowIndex - 1, colIndex] = true;
+                    else
+                        throw new InvalidGameCharacterException(); 
+                }
+            }
         }
 
         private void GetGameSize(string initialGameState)
