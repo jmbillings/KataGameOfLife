@@ -48,5 +48,14 @@ namespace GameOfLifeKata.Tests
             Game game = new Game(initialGameState);
             Assert.AreEqual(expectedGameState, game.m_Grid);
         }
+
+        [Test]
+        [TestCase("1 1\na")]
+        [TestCase("2 2\n..\n*x")]
+        public void InvalidCharacterInGameDefinitionThrowsExpectedException(string initialGameState)
+        {
+            Game game;
+            Assert.Throws<InvalidGameCharacterException>(() => game = new Game(initialGameState));
+        }
     }
 }
