@@ -9,8 +9,8 @@ namespace GameOfLifeKata
 {
     public class Game
     {
-        public int m_Columns;
-        public int m_Rows;
+        public int m_ColumnCount;
+        public int m_RowCount;
 
         /// <summary>
         /// Initialises a new game
@@ -37,11 +37,11 @@ namespace GameOfLifeKata
 
                 if (headerRowValues.Length != 2)
                     throw new InvalidGameHeaderException();
-                if (!int.TryParse(headerRowValues[0], out m_Rows))
+                if (!int.TryParse(headerRowValues[0], out m_RowCount))
                     throw new InvalidGameHeaderException();
-                if (!int.TryParse(headerRowValues[1], out m_Columns))
+                if (!int.TryParse(headerRowValues[1], out m_ColumnCount))
                     throw new InvalidGameHeaderException();
-                if (m_Columns == 0 || m_Rows == 0)
+                if (m_ColumnCount == 0 || m_RowCount == 0)
                     throw new InvalidGameHeaderException();
 
             }

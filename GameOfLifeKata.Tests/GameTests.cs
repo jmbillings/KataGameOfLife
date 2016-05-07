@@ -16,8 +16,8 @@ namespace GameOfLifeKata.Tests
         public void ValidGameHeaderSetsColumnsAndRowsCorrectly(string gameHeader, int expectedRows, int expectedColumns)
         {
             Game game = new Game(gameHeader);
-            Assert.AreEqual(game.m_Rows, expectedRows);
-            Assert.AreEqual(game.m_Columns, expectedColumns);    
+            Assert.AreEqual(game.m_RowCount, expectedRows);
+            Assert.AreEqual(game.m_ColumnCount, expectedColumns);    
         }
 
         [Test]
