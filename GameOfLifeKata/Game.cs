@@ -11,6 +11,7 @@ namespace GameOfLifeKata
     {
         public int m_ColumnCount;
         public int m_RowCount;
+        public bool[,] m_Grid;
 
         /// <summary>
         /// Initialises a new game
@@ -18,13 +19,19 @@ namespace GameOfLifeKata
         /// <param name="initialGameState">string representing the initial state of the game</param>
         public Game(string initialGameState)
         {
-            GetGameSize(initialGameState);  
+            GetGameSize(initialGameState);
+            PopulateInitialState(initialGameState);
         }
 
         /// <summary>
         /// Updates the game, calculating life and death
         /// </summary>
         public void UpdateGame()
+        {
+
+        }
+
+        private void PopulateInitialState(string initialGameState)
         {
 
         }
@@ -44,6 +51,7 @@ namespace GameOfLifeKata
                 if (m_ColumnCount == 0 || m_RowCount == 0)
                     throw new InvalidGameHeaderException();
 
+                m_Grid = new bool[m_RowCount, m_ColumnCount];
             }
             catch
             {
