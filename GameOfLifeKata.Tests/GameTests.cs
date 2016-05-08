@@ -16,6 +16,12 @@ namespace GameOfLifeKata.Tests
             new object[] {"4 4\n...*\n..**\n....\n*...", new bool[,] { { false, false, false, true }, { false, false, true, true }, { false, false, false, false}, { true, false, false, false } } }
                                     };
 
+        private static object[] _sourceGameUpdateOnce = {
+            new object[] {"1 1\n*", new bool[,] { { false } } }, //one live cell dies
+            new object[] {"2 2\n**\n*.", new bool[,] { {true,true }, { true, true} } }, //one dead cell should become alive with exactly three neighbours
+            new object[] {"4 3\n..**\n..**\n..**", new bool[,] { { false, false, true, true }, { false, false, false, false }, { false, false, true, true} } } //live cells with > 3 live neighbours die
+        };
+
         [Test]
         [TestCase("1 2\n", 1, 2)]
         [TestCase("10 20\n", 10, 20)]
@@ -57,5 +63,15 @@ namespace GameOfLifeKata.Tests
             Game game;
             Assert.Throws<InvalidGameCharacterException>(() => game = new Game(initialGameState));
         }
+
+        [Test]
+        [TestCaseSource("_sourceGameUpdateOnce")]
+        public void GameStateIsCorrectAfterOneUpdate(string initialGameState, bool[,] expectedGameState)
+        {
+            Game game = new Game(initialGameState);
+            game.UpdateGame();
+            Assert.AreEqual(expectedGameState, game.m_Grid);
+        }
+        
     }
 }
