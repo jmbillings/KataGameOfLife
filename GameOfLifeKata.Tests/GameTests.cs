@@ -65,6 +65,17 @@ namespace GameOfLifeKata.Tests
             Assert.AreEqual(expectedGameState, game.m_Grid);
         }
 
+        [Test]
+        public void ARandomizedTestWillStartAndRunFor100IterationsWithoutThrowing()
+        {
+            var game = new Game(100, 100);
+            var iterations = 0;
+            while (iterations <= 100)
+            {
+                Assert.DoesNotThrow(() => game.UpdateGame());
+                iterations++;
+            }
+        }
 
 
         private static readonly object[] m_SourceGames =
