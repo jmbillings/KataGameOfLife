@@ -70,19 +70,6 @@ namespace GameOfLifeKata.Tests
         }
 
         [Test]
-        public void ARandomizedTestWillStartAndRunFor100IterationsWithoutThrowing()
-        {
-            var game = new Game();
-            game.GenerateRandomGame(100, 100);
-            var iterations = 0;
-            while (iterations <= 100)
-            {
-                Assert.DoesNotThrow(() => game.UpdateGame());
-                iterations++;
-            }
-        }
-
-        [Test]
         [TestCaseSource("m_OutputTestGames")]
         public void ConsoleOutputShowsCorrectInitialGameState(string initialGameState, string expectedGameOutput)
         {
