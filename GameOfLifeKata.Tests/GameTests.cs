@@ -82,6 +82,31 @@ namespace GameOfLifeKata.Tests
             }
         }
 
+        [Test]
+        [TestCaseSource("m_OutputTestGames")]
+        public void ConsoleOutputShowsCorrectInitialGameState(string initialGameState, string expectedGameOutput)
+        {
+            var game = new Game();
+            game.GenerateGameFromString(initialGameState);
+
+            var consoleGameOutput = new StringGameOutput();
+
+            Assert.AreEqual(expectedGameOutput, consoleGameOutput.OutputGameGrid(game.m_Grid));
+        }
+
+        [Test]
+        [TestCaseSource("m_OutputTestGamesAfterTwoUpdates")]
+        public void ConsoleOutputShowsCorrectGameStateAfterTwoUpdates(string initialGameState, string expectedGameOutput)
+        {
+            var game = new Game();
+            game.GenerateGameFromString(initialGameState);
+            game.UpdateGame();
+            game.UpdateGame();
+
+            var consoleGameOutput = new StringGameOutput();
+
+            Assert.AreEqual(expectedGameOutput, consoleGameOutput.OutputGameGrid(game.m_Grid));
+        }
 
         private static readonly object[] m_SourceGames =
         {
@@ -147,7 +172,7 @@ namespace GameOfLifeKata.Tests
         };
 
         private static readonly object[] m_SourceGameUpdateTwice =
-       {
+        {
             new object[] {"1 1\n*", new[,] {{false}}}, //one live cell dies
             new object[]
             {
@@ -180,6 +205,44 @@ namespace GameOfLifeKata.Tests
                     {false, false, false, false, true, true},
                     {false, false, false, false, false, false}
                 }
+            }
+        };
+
+        private static readonly object[] m_OutputTestGames =
+        {
+            new object[]
+            {
+                "2 2\n.*\n*.",
+                ".*\n*.\n"
+            },
+            new object[]
+            {
+                "4 4\n...*\n..**\n....\n*...",
+                "...*\n..**\n....\n*...\n"
+            }
+        };
+
+        private static readonly object[] m_OutputTestGamesAfterTwoUpdates =
+       {
+            new object[]
+            {
+                "1 1\n*",
+                ".\n"
+            },
+            new object[]
+            {
+                "2 2\n**\n*.",
+                "**\n**\n"
+            },
+            new object[]
+            {
+                "3 4\n..**\n..**\n..**",
+                "..*.\n.*..\n..*.\n"
+            },
+            new object[]
+            {
+                "6 6\n......\n.**...\n**...*\n....**\n.....*\n......",
+                ".*....\n*.**..\n*.*.**\n.*....\n....**\n......\n"
             }
         };
     }
