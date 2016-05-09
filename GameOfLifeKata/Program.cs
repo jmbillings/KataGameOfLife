@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace GameOfLifeKata
@@ -34,13 +35,21 @@ namespace GameOfLifeKata
                     int columnCount;
                     if (int.TryParse(args[1], out rowCount) && int.TryParse(args[2], out columnCount))
                     {
-                        m_Game = new Game(rowCount, columnCount);
+                        if (rowCount <= 50 && columnCount <= 50)
+                        {
+                            m_Game = new Game(rowCount, columnCount);
+                            OutputGameGrid();
+
+                            Console.WriteLine("Press any key to start");
+                            Console.ReadKey();
+                            StartGame();
+                        }
+                        else
+                            Console.WriteLine("A game grid can be 50x50 at most");
                     }
                     else
-                    {
                         Console.WriteLine("Couldn't parse the row / column values\n");
-                        return;
-                    }
+
                     break;
             }
         }
@@ -52,6 +61,36 @@ namespace GameOfLifeKata
             Console.WriteLine("Starts a game with the file specified as the initial state\n");
             Console.WriteLine("GameOfLifeKata -gen <rows> <cols>");
             Console.WriteLine("Starts a random game with a size of rows / cols (maximum of 50x50");
+        }
+
+        private static void StartGame()
+        {
+            var iterations = 0;
+            while (iterations < 1000)
+            {
+                Thread.Sleep(50);
+                m_Game.UpdateGame();
+                OutputGameGrid();
+                Console.WriteLine(iterations + "/1000 iterations (ctrl+C to abort)");
+                iterations++;
+            }
+        }
+
+        private static void OutputGameGrid()
+        {
+            Console.Clear();
+            var gridStringBuilder = new StringBuilder();
+            for (var rowIndex = 0; rowIndex < m_Game.m_RowCount; rowIndex++)
+            {
+                var rowStringBuilder = new StringBuilder();
+                for(var colIndex = 0; colIndex < m_Game.m_ColumnCount; colIndex++)
+                {
+                    rowStringBuilder.Append(m_Game.m_Grid[rowIndex, colIndex] ? '*' : '.');
+                }
+                gridStringBuilder.Append(rowStringBuilder.Append('\n'));
+            }   
+
+            Console.WriteLine(gridStringBuilder.ToString());
         }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Text;
 
 namespace GameOfLifeKata
 {
@@ -7,6 +8,7 @@ namespace GameOfLifeKata
         public int m_ColumnCount;
         public int m_RowCount;
         public bool[,] m_Grid;
+        private Random random;
 
         /// <summary>
         /// Initialises a new game
@@ -25,7 +27,16 @@ namespace GameOfLifeKata
         /// <param name="cols">number of columns in the game grid</param>
         public Game(int rows, int cols)
         {
-            Console.WriteLine("Hi");
+            var gameStringBuilder = new StringBuilder();
+
+            gameStringBuilder.Append(string.Format("{0} {1}\n", rows, cols));
+
+            for (var rowIndex = 0; rowIndex < rows; rowIndex++)
+                gameStringBuilder.Append(GenerateRandomGameRow(cols));
+
+            var initialGameState = gameStringBuilder.ToString();
+            GetGameSize(initialGameState);
+            PopulateInitialState(initialGameState);
         }
 
         /// <summary>
@@ -154,6 +165,26 @@ namespace GameOfLifeKata
             }
 
             return surroundingLiveCells == 3; //rule 4
+        }
+
+        private string GenerateRandomGameRow(int cols)
+        {
+            if (random == null) random = new Random();
+
+            var rowBuilder= new StringBuilder();
+            for (var colIndex = 0; colIndex < cols; colIndex++)
+            {
+                if (random.Next(100) < 30)
+                {
+                    // will be true 30% of the time
+                    rowBuilder.Append('*');
+                }
+                else
+                {
+                    rowBuilder.Append('.');
+                }
+            }
+            return rowBuilder.Append('\n').ToString();
         }
     }
 }
