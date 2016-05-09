@@ -44,10 +44,14 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Game.cs" />
+    <Compile Include="GameUtils.cs" />
+    <Compile Include="IGameGridGenerator.cs" />
     <Compile Include="InvalidGameCharacterException.cs" />
     <Compile Include="InvalidGameHeaderException.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RandomGameGridGenerator.cs" />
+    <Compile Include="StringGameGridGenerator.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
