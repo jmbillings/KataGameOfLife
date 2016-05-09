@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading;
@@ -23,6 +24,8 @@ namespace GameOfLifeKata
             {
                 case "-file":
                     //load the file
+                    var fileContents = File.ReadAllText(args[1]);
+                    m_Game = new Game(fileContents);
                     break;
                 case "-gen":
                     if (args.Length != 3)
@@ -38,11 +41,6 @@ namespace GameOfLifeKata
                         if (rowCount <= 50 && columnCount <= 50)
                         {
                             m_Game = new Game(rowCount, columnCount);
-                            OutputGameGrid();
-
-                            Console.WriteLine("Press any key to start");
-                            Console.ReadKey();
-                            StartGame();
                         }
                         else
                             Console.WriteLine("A game grid can be 50x50 at most");
@@ -52,6 +50,11 @@ namespace GameOfLifeKata
 
                     break;
             }
+
+            OutputGameGrid();
+            Console.WriteLine("Press any key to start");
+            Console.ReadKey();
+            StartGame();
         }
 
         private static void WriteUsage()
