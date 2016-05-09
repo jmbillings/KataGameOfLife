@@ -9,19 +9,6 @@ namespace GameOfLifeKata.Tests
 {
     public class GameTests
     {
-        private static readonly object[] m_SourceGames = {
-            new object[] {"1 1\n.", new bool[,] { { false } } },
-            new object[] {"1 1\n*", new bool[,] { { true } } },
-            new object[] {"2 2\n.*\n*.", new bool[,] { {false,true }, { true, false} } },
-            new object[] {"4 4\n...*\n..**\n....\n*...", new bool[,] { { false, false, false, true }, { false, false, true, true }, { false, false, false, false}, { true, false, false, false } } }
-                                    };
-
-        private static readonly object[] m_SourceGameUpdateOnce = {
-            new object[] {"1 1\n*", new bool[,] { { false } } }, //one live cell dies
-            new object[] {"2 2\n**\n*.", new bool[,] { {true,true }, { true, true} } }, //one dead cell should become alive with exactly three neighbours
-            new object[] {"3 4\n..**\n..**\n..**", new bool[,] { { false, false, true, true }, { false, true, false, false }, { false, false, true, true} } } //live cells with > 3 live neighbours die, dead cell with == 3 neighbours lives
-        };
-
         [Test]
         [TestCase("1 2\n", 1, 2)]
         [TestCase("10 20\n", 10, 20)]
@@ -72,6 +59,70 @@ namespace GameOfLifeKata.Tests
             game.UpdateGame();
             Assert.AreEqual(expectedGameState, game.m_Grid);
         }
-        
+
+
+
+        private static readonly object[] m_SourceGames =
+        {
+            new object[] {"1 1\n.", new[,] {{false}}},
+            new object[] {"1 1\n*", new[,] {{true}}},
+            new object[]
+            {
+                "2 2\n.*\n*.",
+                new[,]
+                {
+                    {false, true},
+                    {true, false}
+                }
+            },
+            new object[]
+            {
+                "4 4\n...*\n..**\n....\n*...",
+                new[,]
+                {
+                    {false, false, false, true},
+                    {false, false, true, true},
+                    {false, false, false, false},
+                    {true, false, false, false}
+                }
+            }
+        };
+
+        private static readonly object[] m_SourceGameUpdateOnce =
+        {
+            new object[] {"1 1\n*", new[,] {{false}}}, //one live cell dies
+            new object[]
+            {
+                "2 2\n**\n*.",
+                new[,]
+                {
+                    {true, true},
+                    {true, true}
+                }
+            }, //one dead cell should become alive with exactly three neighbours
+            new object[]
+            {
+                "3 4\n..**\n..**\n..**",
+                new[,]
+                {
+                    {false, false, true, true},
+                    {false, true, false, false},
+                    {false, false, true, true}
+                }
+            }, //live cells with > 3 live neighbours die, dead cell with == 3 neighbours lives
+            new object[]
+            {
+                "6 6\n......\n.**...\n**...*\n....**\n.....*\n......",
+                new[,]
+                {
+                    {false, false, false, false, false, false},
+                    {false, false, false, false, false, false},
+                    {false, false, false, false, false, false},
+                    {false, false, false, false, false, false},
+                    {false, false, false, false, false, false},
+                    {false, false, false, false, false, false}
+                }
+            }
+        };
     }
 }
