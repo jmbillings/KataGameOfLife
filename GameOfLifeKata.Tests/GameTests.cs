@@ -19,7 +19,7 @@ namespace GameOfLifeKata.Tests
         private static readonly object[] m_SourceGameUpdateOnce = {
             new object[] {"1 1\n*", new bool[,] { { false } } }, //one live cell dies
             new object[] {"2 2\n**\n*.", new bool[,] { {true,true }, { true, true} } }, //one dead cell should become alive with exactly three neighbours
-            new object[] {"4 3\n..**\n..**\n..**", new bool[,] { { false, false, true, true }, { false, false, false, false }, { false, false, true, true} } } //live cells with > 3 live neighbours die
+            new object[] {"3 4\n..**\n..**\n..**", new bool[,] { { false, false, true, true }, { false, true, false, false }, { false, false, true, true} } } //live cells with > 3 live neighbours die, dead cell with == 3 neighbours lives
         };
 
         [Test]
