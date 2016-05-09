@@ -60,6 +60,16 @@ namespace GameOfLifeKata.Tests
             Assert.AreEqual(expectedGameState, game.m_Grid);
         }
 
+        [Test]
+        [TestCaseSource("m_SourceGameUpdateTwice")]
+        public void GameStateIsCorrectAfterTwoUpdates(string initialGameState, bool[,] expectedGameState)
+        {
+            Game game = new Game(initialGameState);
+            game.UpdateGame();
+            game.UpdateGame();
+            Assert.AreEqual(expectedGameState, game.m_Grid);
+        }
+
 
 
         private static readonly object[] m_SourceGames =
@@ -119,6 +129,43 @@ namespace GameOfLifeKata.Tests
                     {true, true, true, false, false, false},
                     {true, true, true, false, true, true},
                     {false, false, false, false, true, true},
+                    {false, false, false, false, true, true},
+                    {false, false, false, false, false, false}
+                }
+            }
+        };
+
+        private static readonly object[] m_SourceGameUpdateTwice =
+       {
+            new object[] {"1 1\n*", new[,] {{false}}}, //one live cell dies
+            new object[]
+            {
+                "2 2\n**\n*.",
+                new[,]
+                {
+                    {true, true},
+                    {true, true}
+                }
+            }, //one dead cell should become alive with exactly three neighbours
+            new object[]
+            {
+                "3 4\n..**\n..**\n..**",
+                new[,]
+                {
+                    {false, false, true, false},
+                    {false, true, false, false},
+                    {false, false, true, false}
+                }
+            }, //live cells with > 3 live neighbours die, dead cell with == 3 neighbours lives
+            new object[]
+            {
+                "6 6\n......\n.**...\n**...*\n....**\n.....*\n......",
+                new[,]
+                {
+                    {false, true, false, false, false, false},
+                    {true, false, true, true, false, false},
+                    {true, false, true, false, true, true},
+                    {false, true, false, false, false, false},
                     {false, false, false, false, true, true},
                     {false, false, false, false, false, false}
                 }
