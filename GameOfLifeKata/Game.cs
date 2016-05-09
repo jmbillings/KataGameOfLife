@@ -1,9 +1,4 @@
 ﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace GameOfLifeKata
 {
@@ -29,12 +24,12 @@ namespace GameOfLifeKata
         public void UpdateGame()
         {
             //make a copy of the grid to work on to avoid each new cell calculation affecting the next
-            bool[,] newValuesGrid = (bool[,])m_Grid.Clone();
-            for (int rowIndex = 0; rowIndex < m_RowCount; rowIndex++)
+            var newValuesGrid = (bool[,])m_Grid.Clone();
+            for (var rowIndex = 0; rowIndex < m_RowCount; rowIndex++)
             {
-                for (int colIndex = 0; colIndex < m_ColumnCount; colIndex++)
+                for (var colIndex = 0; colIndex < m_ColumnCount; colIndex++)
                 {
-                    bool newState = GetNewLifeOrDeathState(rowIndex, colIndex, m_Grid[rowIndex, colIndex]);
+                    var newState = GetNewLifeOrDeathState(rowIndex, colIndex, m_Grid[rowIndex, colIndex]);
                     newValuesGrid[rowIndex, colIndex] = newState;
                 }
             }
@@ -45,18 +40,23 @@ namespace GameOfLifeKata
 
         private void PopulateInitialState(string initialGameState)
         {
-            string[] rows = initialGameState.Split('\n');
-            for (int rowIndex = 1; rowIndex < rows.Length; rowIndex++)
+            var rows = initialGameState.Split('\n');
+            for (var rowIndex = 1; rowIndex < rows.Length; rowIndex++)
             {
-                char[] rowCharacters = rows[rowIndex].ToCharArray();
-                for (int colIndex = 0; colIndex < rowCharacters.Length; colIndex++)
+                var rowCharacters = rows[rowIndex].ToCharArray();
+                for (var colIndex = 0; colIndex < rowCharacters.Length; colIndex++)
                 {
-                    if (rowCharacters[colIndex] == '.')
-                        m_Grid[rowIndex - 1, colIndex] = false;
-                    else if (rowCharacters[colIndex] == '*')
-                        m_Grid[rowIndex - 1, colIndex] = true;
-                    else
-                        throw new InvalidGameCharacterException(); 
+                    switch (rowCharacters[colIndex])
+                    {
+                        case '.':
+                            m_Grid[rowIndex - 1, colIndex] = false;
+                            break;
+                        case '*':
+                            m_Grid[rowIndex - 1, colIndex] = true;
+                            break;
+                        default:
+                            throw new InvalidGameCharacterException();
+                    } 
                 }
             }
         }
@@ -65,7 +65,7 @@ namespace GameOfLifeKata
         {
             try
             {
-                string[] headerRowValues = initialGameState.Substring(0, initialGameState.IndexOf('\n')).Split(' ');
+                var headerRowValues = initialGameState.Substring(0, initialGameState.IndexOf('\n')).Split(' ');
 
                 if (headerRowValues.Length != 2)
                     throw new InvalidGameHeaderException();
@@ -86,12 +86,11 @@ namespace GameOfLifeKata
 
         private bool GetNewLifeOrDeathState(int rowIndex, int colIndex, bool currentCellState)
         {
-            int surroundingLiveCells = 0;
-            int surroundingDeadCells = 0;
+            var surroundingLiveCells = 0;
 
-            for (int rowCounter = rowIndex - 1; rowCounter <= rowIndex + 1; rowCounter++)
+            for (var rowCounter = rowIndex - 1; rowCounter <= rowIndex + 1; rowCounter++)
             {
-                for (int colCounter = colIndex - 1; colCounter <= colIndex + 1; colCounter++)
+                for (var colCounter = colIndex - 1; colCounter <= colIndex + 1; colCounter++)
                 {
                     try
                     {
@@ -100,11 +99,9 @@ namespace GameOfLifeKata
                             continue;
 
                         //find the value of the surrounding cell at the given point
-                        bool workingCell = m_Grid[rowCounter, colCounter];
+                        var workingCell = m_Grid[rowCounter, colCounter];
                         if (workingCell)
                             surroundingLiveCells++;
-                        else
-                            surroundingDeadCells++;
                     }
                     catch (IndexOutOfRangeException)
                     {

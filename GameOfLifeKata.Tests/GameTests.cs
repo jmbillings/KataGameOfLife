@@ -1,9 +1,4 @@
 ﻿using NUnit.Framework;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace GameOfLifeKata.Tests
 {
@@ -15,7 +10,7 @@ namespace GameOfLifeKata.Tests
         [TestCase("100 200\n", 100, 200)]
         public void ValidGameHeaderSetsColumnsAndRowsCorrectly(string gameHeader, int expectedRows, int expectedColumns)
         {
-            Game game = new Game(gameHeader);
+            var game = new Game(gameHeader);
             Assert.AreEqual(expectedRows, game.m_RowCount);
             Assert.AreEqual(expectedColumns, game.m_ColumnCount);
         }
@@ -38,7 +33,7 @@ namespace GameOfLifeKata.Tests
         [TestCaseSource("m_SourceGames")]
         public void InitialGameStateIsPopulatedCorrectly(string initialGameState, bool[,] expectedGameState)
         {
-            Game game = new Game(initialGameState);
+            var game = new Game(initialGameState);
             Assert.AreEqual(expectedGameState, game.m_Grid);
         }
 
@@ -55,7 +50,7 @@ namespace GameOfLifeKata.Tests
         [TestCaseSource("m_SourceGameUpdateOnce")]
         public void GameStateIsCorrectAfterOneUpdate(string initialGameState, bool[,] expectedGameState)
         {
-            Game game = new Game(initialGameState);
+            var game = new Game(initialGameState);
             game.UpdateGame();
             Assert.AreEqual(expectedGameState, game.m_Grid);
         }
@@ -64,7 +59,7 @@ namespace GameOfLifeKata.Tests
         [TestCaseSource("m_SourceGameUpdateTwice")]
         public void GameStateIsCorrectAfterTwoUpdates(string initialGameState, bool[,] expectedGameState)
         {
-            Game game = new Game(initialGameState);
+            var game = new Game(initialGameState);
             game.UpdateGame();
             game.UpdateGame();
             Assert.AreEqual(expectedGameState, game.m_Grid);
