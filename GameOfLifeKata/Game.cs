@@ -29,7 +29,7 @@ namespace GameOfLifeKata
         public void UpdateGame()
         {
             //make a copy of the grid to work on to avoid each new cell calculation affecting the next
-            bool[,] newValuesGrid = m_Grid;
+            bool[,] newValuesGrid = (bool[,])m_Grid.Clone();
             for (int rowIndex = 0; rowIndex < m_RowCount; rowIndex++)
             {
                 for (int colIndex = 0; colIndex < m_ColumnCount; colIndex++)
@@ -125,7 +125,7 @@ namespace GameOfLifeKata
                 if (surroundingLiveCells < 2)
                     return false; //rule 1
 
-                if (surroundingDeadCells > 3)
+                if (surroundingLiveCells > 3)
                     return false; //rule 2
 
                 return true; //rule 3
