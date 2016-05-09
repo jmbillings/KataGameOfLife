@@ -11,6 +11,7 @@ namespace GameOfLifeKata
     class Program
     {
         private static Game m_Game;
+        private static IGameOutput m_GameOutput;
 
         static void Main(string[] args)
         {
@@ -83,19 +84,10 @@ namespace GameOfLifeKata
 
         private static void OutputGameGrid()
         {
-            Console.Clear();
-            var gridStringBuilder = new StringBuilder();
-            for (var rowIndex = 0; rowIndex < m_Game.m_RowCount; rowIndex++)
-            {
-                var rowStringBuilder = new StringBuilder();
-                for(var colIndex = 0; colIndex < m_Game.m_ColumnCount; colIndex++)
-                {
-                    rowStringBuilder.Append(m_Game.m_Grid[rowIndex, colIndex] ? '*' : '.');
-                }
-                gridStringBuilder.Append(rowStringBuilder.Append('\n'));
-            }   
+            if (m_GameOutput == null)
+                m_GameOutput = new ConsoleGameOutput();
 
-            Console.WriteLine(gridStringBuilder.ToString());
+            m_GameOutput.OutputGameGrid(m_Game.m_Grid);
         }
     }
 }

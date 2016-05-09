@@ -43,6 +43,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ConsoleGameOutput.cs" />
     <Compile Include="Game.cs" />
     <Compile Include="GameUtils.cs" />
     <Compile Include="IGameGridGenerator.cs" />
