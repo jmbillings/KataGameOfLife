@@ -3,6 +3,6 @@ namespace GameOfLifeKata
 {
     public interface  IGameOutput
     {
-        void OutputGameGrid(bool[,] gameGrid);
+        string OutputGameGrid(bool[,] gameGrid);
     }
 }

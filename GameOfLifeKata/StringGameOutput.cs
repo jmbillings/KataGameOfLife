@@ -3,11 +3,10 @@ using System.Text;
 
 namespace GameOfLifeKata
 {
-    class ConsoleGameOutput : IGameOutput
+    public class StringGameOutput : IGameOutput
     {
-        public void OutputGameGrid(bool[,] gameGrid)
+        public string OutputGameGrid(bool[,] gameGrid)
         {
-            Console.Clear();
             var gridStringBuilder = new StringBuilder();
             for (var rowIndex = 0; rowIndex < gameGrid.GetLength(0); rowIndex++)
             {
@@ -19,7 +18,7 @@ namespace GameOfLifeKata
                 gridStringBuilder.Append(rowStringBuilder.Append('\n'));
             }
 
-            Console.WriteLine(gridStringBuilder.ToString());
+            return (gridStringBuilder.ToString());
         }
     }
 }
