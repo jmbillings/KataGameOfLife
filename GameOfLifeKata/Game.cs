@@ -19,6 +19,16 @@ namespace GameOfLifeKata
         }
 
         /// <summary>
+        /// Initialises a new random game
+        /// </summary>
+        /// <param name="rows">number of rows in the game grid</param>
+        /// <param name="cols">number of columns in the game grid</param>
+        public Game(int rows, int cols)
+        {
+            Console.WriteLine("Hi");
+        }
+
+        /// <summary>
         /// Updates the game, calculating life and death
         /// </summary>
         public void UpdateGame()
@@ -38,6 +48,10 @@ namespace GameOfLifeKata
             m_Grid = newValuesGrid;
         }
 
+        /// <summary>
+        /// Populates the grid with the initial state of each cell
+        /// </summary>
+        /// <param name="initialGameState">string representing the initial state of the game</param>
         private void PopulateInitialState(string initialGameState)
         {
             var rows = initialGameState.Split('\n');
@@ -61,6 +75,10 @@ namespace GameOfLifeKata
             }
         }
 
+        /// <summary>
+        /// Sets the size of the empty game grid
+        /// </summary>
+        /// <param name="initialGameState">string representing the initial state of the game</param>
         private void GetGameSize(string initialGameState)
         {
             try
@@ -84,6 +102,13 @@ namespace GameOfLifeKata
             }
         }
 
+        /// <summary>
+        /// Gets the new state of a cell based on the rules of the game
+        /// </summary>
+        /// <param name="rowIndex">row in the grid of the cell</param>
+        /// <param name="colIndex">column in the grid of the cell</param>
+        /// <param name="currentCellState">the current cell state (alive or dead)</param>
+        /// <returns></returns>
         private bool GetNewLifeOrDeathState(int rowIndex, int colIndex, bool currentCellState)
         {
             var surroundingLiveCells = 0;
