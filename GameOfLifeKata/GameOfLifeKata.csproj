@@ -46,6 +46,7 @@
     <Compile Include="Game.cs" />
     <Compile Include="GameUtils.cs" />
     <Compile Include="IGameGridGenerator.cs" />
+    <Compile Include="IGameOutput.cs" />
     <Compile Include="InvalidGameCharacterException.cs" />
     <Compile Include="InvalidGameHeaderException.cs" />
     <Compile Include="Program.cs" />
