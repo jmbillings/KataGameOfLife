@@ -9,14 +9,14 @@ namespace GameOfLifeKata.Tests
 {
     public class GameTests
     {
-        private static object[] _sourceGames = {
+        private static readonly object[] m_SourceGames = {
             new object[] {"1 1\n.", new bool[,] { { false } } },
             new object[] {"1 1\n*", new bool[,] { { true } } },
             new object[] {"2 2\n.*\n*.", new bool[,] { {false,true }, { true, false} } },
             new object[] {"4 4\n...*\n..**\n....\n*...", new bool[,] { { false, false, false, true }, { false, false, true, true }, { false, false, false, false}, { true, false, false, false } } }
                                     };
 
-        private static object[] _sourceGameUpdateOnce = {
+        private static readonly object[] m_SourceGameUpdateOnce = {
             new object[] {"1 1\n*", new bool[,] { { false } } }, //one live cell dies
             new object[] {"2 2\n**\n*.", new bool[,] { {true,true }, { true, true} } }, //one dead cell should become alive with exactly three neighbours
             new object[] {"4 3\n..**\n..**\n..**", new bool[,] { { false, false, true, true }, { false, false, false, false }, { false, false, true, true} } } //live cells with > 3 live neighbours die
@@ -48,7 +48,7 @@ namespace GameOfLifeKata.Tests
         }
 
         [Test]
-        [TestCaseSource("_sourceGames")]
+        [TestCaseSource("m_SourceGames")]
         public void InitialGameStateIsPopulatedCorrectly(string initialGameState, bool[,] expectedGameState)
         {
             Game game = new Game(initialGameState);
@@ -65,7 +65,7 @@ namespace GameOfLifeKata.Tests
         }
 
         [Test]
-        [TestCaseSource("_sourceGameUpdateOnce")]
+        [TestCaseSource("m_SourceGameUpdateOnce")]
         public void GameStateIsCorrectAfterOneUpdate(string initialGameState, bool[,] expectedGameState)
         {
             Game game = new Game(initialGameState);
