@@ -28,7 +28,19 @@ namespace GameOfLifeKata
         /// </summary>
         public void UpdateGame()
         {
+            //make a copy of the grid to work on to avoid each new cell calculation affecting the next
+            bool[,] newValuesGrid = m_Grid;
+            for (int rowIndex = 0; rowIndex < m_RowCount; rowIndex++)
+            {
+                for (int colIndex = 0; colIndex < m_ColumnCount; colIndex++)
+                {
+                    bool newState = GetNewLifeOrDeathState(rowIndex, colIndex, m_Grid[rowIndex, colIndex]);
+                    newValuesGrid[rowIndex, colIndex] = newState;
+                }
+            }
 
+            //replace the game grid with the working copy
+            m_Grid = newValuesGrid;
         }
 
         private void PopulateInitialState(string initialGameState)
@@ -70,6 +82,56 @@ namespace GameOfLifeKata
             {
                 throw new InvalidGameHeaderException();
             }
+        }
+
+        private bool GetNewLifeOrDeathState(int rowIndex, int colIndex, bool currentCellState)
+        {
+            int surroundingLiveCells = 0;
+            int surroundingDeadCells = 0;
+
+            for (int rowCounter = rowIndex - 1; rowCounter <= rowIndex + 1; rowCounter++)
+            {
+                for (int colCounter = colIndex - 1; colCounter <= colIndex + 1; colCounter++)
+                {
+                    try
+                    {
+                        //don't include the cell we're updating in the calculation
+                        if (rowCounter == rowIndex && colCounter == colIndex)
+                            continue;
+
+                        //find the value of the surrounding cell at the given point
+                        bool workingCell = m_Grid[rowCounter, colCounter];
+                        if (workingCell)
+                            surroundingLiveCells++;
+                        else
+                            surroundingDeadCells++;
+                    }
+                    catch (IndexOutOfRangeException)
+                    {
+                        //we expect this to happen around the edge of the grid, so continue.
+                        //TODO: don't rely on exceptions for control flow
+                    }
+                }
+            }
+
+            //Rules:
+            //1.Any live cell with fewer than two live neighbours dies, as if caused by underpopulation.
+            //2.Any live cell with more than three live neighbours dies, as if by overcrowding.
+            //3.Any live cell with two or three live neighbours lives on to the next generation.
+            //4.Any dead cell with exactly three live neighbours becomes a live cell.
+
+            if (currentCellState)
+            {
+                if (surroundingLiveCells < 2)
+                    return false; //rule 1
+
+                if (surroundingDeadCells > 3)
+                    return false; //rule 2
+
+                return true; //rule 3
+            }
+
+            return surroundingLiveCells == 3; //rule 4
         }
     }
 }
