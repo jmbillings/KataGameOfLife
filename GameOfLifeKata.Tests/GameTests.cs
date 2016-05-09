@@ -10,7 +10,8 @@ namespace GameOfLifeKata.Tests
         [TestCase("100 200\n", 100, 200)]
         public void ValidGameHeaderSetsColumnsAndRowsCorrectly(string gameHeader, int expectedRows, int expectedColumns)
         {
-            var game = new Game(gameHeader);
+            var game = new Game();
+            game.GenerateGameFromString(gameHeader);
             Assert.AreEqual(expectedRows, game.m_RowCount);
             Assert.AreEqual(expectedColumns, game.m_ColumnCount);
         }
@@ -25,15 +26,16 @@ namespace GameOfLifeKata.Tests
         [TestCase("1 2")]
         public void InvalidGameHeaderThrowsCorrectException(string gameHeader)
         {
-            Game game;
-            Assert.Throws<InvalidGameHeaderException>(() => game = new Game(gameHeader));
+            var game = new Game();
+            Assert.Throws<InvalidGameHeaderException>(() => game.GenerateGameFromString(gameHeader));
         }
 
         [Test]
         [TestCaseSource("m_SourceGames")]
         public void InitialGameStateIsPopulatedCorrectly(string initialGameState, bool[,] expectedGameState)
         {
-            var game = new Game(initialGameState);
+            var game = new Game();
+            game.GenerateGameFromString(initialGameState);
             Assert.AreEqual(expectedGameState, game.m_Grid);
         }
 
@@ -42,15 +44,16 @@ namespace GameOfLifeKata.Tests
         [TestCase("2 2\n..\n*x")]
         public void InvalidCharacterInGameDefinitionThrowsExpectedException(string initialGameState)
         {
-            Game game;
-            Assert.Throws<InvalidGameCharacterException>(() => game = new Game(initialGameState));
+            var game = new Game();
+            Assert.Throws<InvalidGameCharacterException>(() => game.GenerateGameFromString(initialGameState));
         }
 
         [Test]
         [TestCaseSource("m_SourceGameUpdateOnce")]
         public void GameStateIsCorrectAfterOneUpdate(string initialGameState, bool[,] expectedGameState)
         {
-            var game = new Game(initialGameState);
+            var game = new Game();
+            game.GenerateGameFromString(initialGameState);
             game.UpdateGame();
             Assert.AreEqual(expectedGameState, game.m_Grid);
         }
@@ -59,7 +62,8 @@ namespace GameOfLifeKata.Tests
         [TestCaseSource("m_SourceGameUpdateTwice")]
         public void GameStateIsCorrectAfterTwoUpdates(string initialGameState, bool[,] expectedGameState)
         {
-            var game = new Game(initialGameState);
+            var game = new Game();
+            game.GenerateGameFromString(initialGameState);
             game.UpdateGame();
             game.UpdateGame();
             Assert.AreEqual(expectedGameState, game.m_Grid);
@@ -68,7 +72,8 @@ namespace GameOfLifeKata.Tests
         [Test]
         public void ARandomizedTestWillStartAndRunFor100IterationsWithoutThrowing()
         {
-            var game = new Game(100, 100);
+            var game = new Game();
+            game.GenerateRandomGame(100, 100);
             var iterations = 0;
             while (iterations <= 100)
             {
