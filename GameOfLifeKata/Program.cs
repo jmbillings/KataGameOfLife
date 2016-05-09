@@ -25,7 +25,8 @@ namespace GameOfLifeKata
                 case "-file":
                     //load the file
                     var fileContents = File.ReadAllText(args[1]);
-                    m_Game = new Game(fileContents);
+                    m_Game = new Game();
+                    m_Game.GenerateGameFromString(fileContents);
                     break;
                 case "-gen":
                     if (args.Length != 3)
@@ -40,7 +41,8 @@ namespace GameOfLifeKata
                     {
                         if (rowCount <= 50 && columnCount <= 50)
                         {
-                            m_Game = new Game(rowCount, columnCount);
+                            m_Game = new Game();
+                            m_Game.GenerateRandomGame(rowCount, columnCount);
                         }
                         else
                             Console.WriteLine("A game grid can be 50x50 at most");
