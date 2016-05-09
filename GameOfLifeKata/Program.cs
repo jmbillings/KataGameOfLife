@@ -85,9 +85,10 @@ namespace GameOfLifeKata
         private static void OutputGameGrid()
         {
             if (m_GameOutput == null)
-                m_GameOutput = new ConsoleGameOutput();
+                m_GameOutput = new StringGameOutput();
 
-            m_GameOutput.OutputGameGrid(m_Game.m_Grid);
+            Console.Clear();
+            Console.Write(m_GameOutput.OutputGameGrid(m_Game.m_Grid));
         }
     }
 }
